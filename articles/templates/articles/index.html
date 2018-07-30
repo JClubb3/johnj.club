@@ -1,0 +1,17 @@
+{% extends "articles/base.html" %}
+
+{% block title %}
+    <title>Home | {{ site_title }}</title>
+{% endblock %}
+  
+{% block current_page_name %}
+    Home
+{% endblock %}
+
+{% block article_title %}
+    {{ article.title }}
+{% endblock %}
+
+{% block article_content %}
+    {{ article.content }}
+{% endblock %}

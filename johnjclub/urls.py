@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('wizardry/', admin.site.urls),
-    path('articles/', include('articles.urls')),
+    path('', include('articles.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,36 +1,75 @@
+import datetime
+
 from django.db import models
+from django.urls import reverse
+from django.utils import timezone
+
 
 # Create your models here.
 class Author(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
+    bio = models.TextField(help_text="I mean. It's a bio.")
+    image = models.ImageField(blank=True, upload_to="uploads/")
+    slug = models.SlugField(help_text="A no space name to be used for URLs")
 
     def __str__(self):
         return self.name
-        
+
+    def get_absolute_url(self):
+        #pylint: disable=E1101
+        return reverse('author-detail', args=[self.slug])
+
 class Series(models.Model):
     name = models.CharField(max_length=40, help_text="The series this article should be filed under; will be used for URLs", unique=True)
+    description = models.TextField(default="", help_text="A description of the series")
+    slug = models.SlugField(help_text="The short version of the name to use in URLs")
 
     def __str__(self):
-        return self.name
+        return self.slug
+
+    def get_absolute_url(self):
+        #pylint: disable=E1101
+        return reverse('series-detail', args=[self.slug])
 
 class Tag(models.Model):
-    name = models.CharField(max_length=200, help_text="Tags used to help search for articles")
+    name = models.CharField(max_length=200, help_text="Tags used to help search for articles", unique=True)
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        #pylint: disable=E1101
+        return reverse('tag-detail', args=[self.name])
 
 class Article(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(help_text="Slugs are short versions of the title used for URLs")
-    content = models.TextField()
+    content = models.TextField(help_text="Unlimited length. HTML formatted.")
     shortline = models.CharField(max_length=200, help_text="A short summary to show in the sidebar and under the article title")
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
-    date_posted = models.DateTimeField(auto_now_add=True)
-    date_modifed = models.DateTimeField(auto_now=True, editable=False)
+    date_posted = models.DateTimeField(default=timezone.now)
+    date_modified = models.DateTimeField(auto_now=True, editable=False)
+    date_created = models.DateTimeField(auto_now_add=True)
     series = models.ForeignKey('Series', on_delete=models.SET_DEFAULT, default=0)
     tags = models.ManyToManyField('Tag')
     image = models.ImageField(upload_to="uploads/", blank=True)
     enabled = models.BooleanField(default=True)
 
+    class Meta:
+        get_latest_by: "-date_posted"
+        ordering = ["-date_posted", "-date_modified"]
+
     def __str__(self):
-        return self.title
+        return "{0}/{1}".format(self.series, self.slug)
+
+    def get_absolute_url(self):
+        return reverse('article-detail', args=[self.series, self.slug])
+
+    @property
+    def has_been_modified(self):
+        d = self.date_modified - self.date_posted
+        try:
+            r = d.days
+        except AttributeError:
+            r = 0
+        return r

@@ -1,0 +1,21 @@
+{% extends "articles/articles.html" %}
+
+{% block content %}
+<h2>This page presents articles sorted by latest published. You may instead show them by <a href="{% url 'series-list' %}">Series</a>.</h2>
+
+    {% for article in article_list %}
+        <div class="article-iter">
+            <div class="article-iter-title">
+                    <h4><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h4>
+            </div>
+            <div class="article-iter-byline">
+                <p>Part of the <a href="{{ article.series.get_absolute_url }}">{{ article.series }}</a> series, by <a href="{{ article.author.get_absolute_url }}">{{ article.author }}</a></p>
+                <p>Posted {{ article.date_posted|date:"M. j, Y" }}</p>
+            </div>
+            <div class="article-iter-shortline">
+                <p><em>{{ article.shortline }}</em></p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
