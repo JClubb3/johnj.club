@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -10,7 +11,12 @@ class Author(models.Model):
     name = models.CharField(max_length=200, unique=True)
     bio = models.TextField(help_text="I mean. It's a bio.")
     image = models.ImageField(blank=True, upload_to="uploads/")
-    slug = models.SlugField(help_text="A no space name to be used for URLs")
+    slug = models.SlugField(
+        help_text = "A no space name to be used for URLs",
+        blank = True,
+        null = True,
+        editable = False
+    )
 
     def __str__(self):
         return self.name
@@ -19,10 +25,20 @@ class Author(models.Model):
         #pylint: disable=E1101
         return reverse('author-detail', args=[self.slug])
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
 class Series(models.Model):
     name = models.CharField(max_length=40, help_text="The series this article should be filed under; will be used for URLs", unique=True)
     description = models.TextField(default="", help_text="A description of the series")
-    slug = models.SlugField(help_text="The short version of the name to use in URLs")
+    slug = models.SlugField(
+        help_text="The short version of the name to use in URLs",
+        null = True,
+        editable = False,
+        blank = True
+    )
 
     def __str__(self):
         return self.slug
@@ -30,6 +46,14 @@ class Series(models.Model):
     def get_absolute_url(self):
         #pylint: disable=E1101
         return reverse('series-detail', args=[self.slug])
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = "series"
 
 class Tag(models.Model):
     name = models.CharField(max_length=200, help_text="Tags used to help search for articles", unique=True)
@@ -43,7 +67,12 @@ class Tag(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=200, unique=True)
-    slug = models.SlugField(help_text="Slugs are short versions of the title used for URLs")
+    slug = models.SlugField(
+        help_text="Slugs are short versions of the title used for URLs",
+        blank = True,
+        null = True,
+        editable = False,
+    )
     content = models.TextField(help_text="Unlimited length. HTML formatted.")
     shortline = models.CharField(max_length=200, help_text="A short summary to show in the sidebar and under the article title")
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
@@ -73,3 +102,8 @@ class Article(models.Model):
         except AttributeError:
             r = 0
         return r
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)

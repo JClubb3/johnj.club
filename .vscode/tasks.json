@@ -6,7 +6,8 @@
         {
             "label": "run server",
             "type": "shell",
-            "command": "cd /home/cybernetics/code/johnjclub/python3 manager.py runserver"
+            "command": "cd /home/cybernetics/code/johnjclub/ && python3 manage.py runserver",
+            "problemMatcher": []
         }
     ]
 }
