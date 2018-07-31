@@ -278,6 +278,7 @@ body div {
             animation-delay: 1s;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    color: white;
   }
   .midbar a {
     text-decoration: none;
@@ -299,11 +300,11 @@ body div {
   .sidebar {
     display: -ms-grid;
     display: grid;
-    margin-top: 50px;
+    margin-top: calc(50px + 10px);
     -ms-grid-row: 2;
     -ms-grid-column: 1;
     grid-area: leftSidebar;
-    height: calc(100% - $sidebarMargin);
+    height: calc(100% - 50px - 20px);
     background: #1e46e8;
     -ms-flex-line-pack: start;
         align-content: start;
@@ -316,6 +317,7 @@ body div {
             animation: fadeIn 1.25s ease-in 0s both;
     -webkit-animation-delay: 1s;
             animation-delay: 1s;
+    color: white;
   }
   .sidebar h2 {
     margin-top: 18%;

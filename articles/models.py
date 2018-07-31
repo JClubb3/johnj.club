@@ -41,6 +41,7 @@ class Series(models.Model):
         blank = True
     )
     image = models.ImageField(upload_to="uploads/", blank=True)
+    latest_article_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.slug
@@ -74,6 +75,7 @@ class Series(models.Model):
 
     class Meta:
         verbose_name_plural = "series"
+        ordering = ["-latest_article_date"]
 
 class Tag(models.Model):
     name = models.CharField(max_length=200, help_text="Tags used to help search for articles", unique=True)
@@ -124,6 +126,10 @@ class Article(models.Model):
         return r
 
     def save(self, *args, **kwargs):
+        #pylint: disable=E1101
         if not self.slug:
             self.slug = slugify(self.title)
+        if self.series.latest_article_date is None or self.series.latest_article_date < self.publish_date:
+            self.series.latest_article_date = self.publish_date
+            self.series.save()
         super().save(*args, **kwargs)

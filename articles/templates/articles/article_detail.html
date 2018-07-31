@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block article_header %}
-    <h5>Posted by <a href="{{ article.author.get_absolute_url }}">{{ article.author }}</a> on {{ article.date_posted|date:"M. j, Y" }}</h5>
+    <h5>Posted by <a href="{{ article.author.get_absolute_url }}">{{ article.author }}</a> on {{ article.publish_date|date:"M. j, Y" }}</h5>
     {% if article.has_been_modified %}
         <h5><em>Last modified: {{ article.date_modified }}</em></h5>
     {% endif %}

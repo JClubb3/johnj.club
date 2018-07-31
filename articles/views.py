@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render
 from django.views import generic
 from django.utils import timezone
@@ -19,14 +21,21 @@ class AuthorDetailView(generic.DetailView):
 
 
 class SeriesListView(generic.ListView):
+    model = Series
     paginate_by = 7
-    queryset = Series.objects.all().annotate(
-        latest_article=F('article__publish_date')
-    ).order_by("latest_article")
 
 
 class SeriesDetailView(generic.DetailView):
     model = Series
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        article_list = self.object.article_set.filter(
+            enabled = True,
+            publish_date__lte = timezone.now()
+        )
+        context["article_list"] = article_list
+        return context
 
 
 class TagListView(generic.ListView):
