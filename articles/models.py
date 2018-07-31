@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
+from django.db.models.query import QuerySet
 
 
 # Create your models here.
@@ -39,6 +40,7 @@ class Series(models.Model):
         editable = False,
         blank = True
     )
+    image = models.ImageField(upload_to="uploads/", blank=True)
 
     def __str__(self):
         return self.slug
@@ -51,6 +53,24 @@ class Series(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+    def latest_list(self) -> QuerySet:
+        #pylint: disable=E1101
+        articles = self.article_set.filter(
+            enabled = True,
+            publish_date__lte = timezone.now()
+        )
+        if articles:
+            return articles[:5]
+        else:
+            return None
+
+    def latest_article(self) -> "Article":
+        #pylint: disable = E1101
+        return self.article_set.filter(
+            enabled = True,
+            publish_date__lte = timezone.now()
+        )[:1]
 
     class Meta:
         verbose_name_plural = "series"
@@ -76,7 +96,7 @@ class Article(models.Model):
     content = models.TextField(help_text="Unlimited length. HTML formatted.")
     shortline = models.CharField(max_length=200, help_text="A short summary to show in the sidebar and under the article title")
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
-    date_posted = models.DateTimeField(default=timezone.now)
+    publish_date = models.DateTimeField(default=timezone.now)
     date_modified = models.DateTimeField(auto_now=True, editable=False)
     date_created = models.DateTimeField(auto_now_add=True)
     series = models.ForeignKey('Series', on_delete=models.SET_DEFAULT, default=0)
@@ -85,8 +105,8 @@ class Article(models.Model):
     enabled = models.BooleanField(default=True)
 
     class Meta:
-        get_latest_by: "-date_posted"
-        ordering = ["-date_posted", "-date_modified"]
+        get_latest_by: "-publish_date"
+        ordering = ["-publish_date", "-date_modified"]
 
     def __str__(self):
         return "{0}/{1}".format(self.series, self.slug)
@@ -96,7 +116,7 @@ class Article(models.Model):
 
     @property
     def has_been_modified(self):
-        d = self.date_modified - self.date_posted
+        d = self.date_modified - self.publish_date
         try:
             r = d.days
         except AttributeError:

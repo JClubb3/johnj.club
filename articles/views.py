@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
+from django.utils import timezone
+from django.db.models import F
 
 from .models import Article, Author, Series, Tag
 
@@ -17,7 +19,10 @@ class AuthorDetailView(generic.DetailView):
 
 
 class SeriesListView(generic.ListView):
-    model = Series
+    paginate_by = 7
+    queryset = Series.objects.all().annotate(
+        latest_article=F('article__publish_date')
+    ).order_by("latest_article")
 
 
 class SeriesDetailView(generic.DetailView):
@@ -34,9 +39,16 @@ class TagDetailView(generic.DetailView):
 
 class ArticleListView(generic.ListView):
     #pylint: disable=E1101
-    queryset = Article.objects.all().filter(enabled=True)
+    queryset = Article.objects.all().filter(
+        enabled=True, 
+        publish_date__lte = timezone.now()
+    )
     paginate_by = 7
 
 
 class ArticleDetailView(generic.DetailView):
-    model = Article
+    #pylint: disable=E1101
+    queryset = Article.objects.all().filter(
+        enabled = True,
+        publish_date__lte = timezone.now()
+    )

@@ -16,8 +16,8 @@ class SeriesInline(admin.TabularInline):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('slug', 'series', 'author', 'date_posted', 'date_modified', "enabled")
-    fields = ('title', 'enabled','series', 'slug', 'shortline', 'author', 'tags', 'image', 'content')
+    list_display = ('slug', 'series', 'author', 'publish_date', 'date_modified', "enabled")
+    fields = ('title', 'enabled','series', 'shortline', 'author', 'publish_date', 'tags', 'image', 'content')
     filter_horizontal = ['tags']
-    list_filter = ('series', 'enabled', 'author', 'date_posted', 'date_modified', 'tags')
+    list_filter = ('series', 'enabled', 'author', 'publish_date', 'date_modified', 'tags')
     #inlines = [TagInline, SeriesInline]

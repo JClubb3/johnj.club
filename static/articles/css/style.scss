@@ -1,12 +1,6 @@
-$sidebarMargin: 40px;
-$fadeInAnimationSettings: fadeIn 1.25s ease-in 0s both;
-$navBarColor: #858585;
-$barColor: #66b652;
-$standardBackground: #eff0f1;
-$navHoverColor: $barColor;
-$navLinkColor: white;
-$mainLinkColor: blue;
-$visitedLinkColor: blue;
+@import 'variables';
+@import 'article_list';
+@import 'seriest_list';
 
 @mixin navButtonRules {
   background: none;
@@ -28,19 +22,20 @@ $visitedLinkColor: blue;
 * {
   margin: 0;
   padding: 0;
-  display: grid;
   box-sizing: border-box;
   max-width: 100vw;
 }
 
-title {
-  display: none;
-}
-
 body {
   min-height: 100vh;
+  min-width: 100vw;
   font-size: 20px;
   background: $standardBackground;
+  display: grid;
+
+  div {
+    display: grid;
+  }
 }
 
 .gridContainer {
@@ -63,15 +58,26 @@ body {
     position: fixed;
     z-index: 100000000;
 
+    .navCurrentPage {
+      color: $barColor;
+    }
+
     .siteTitle {
       width: 80px;
       //height: 50px;
       position: absolute;
       top: 10px;
-      left: calc(50% - 150px);
+      left: calc(50% - 180px);
       border: 1px solid red;
-      word-breaK: break-all;
+      word-break: break-all;
       color: green;
+
+      a {
+        text-decoration: none;
+        &:visited {
+          color: inherit;
+        }
+      }
     }
 
     .hamburger {
@@ -93,16 +99,18 @@ body {
     grid-area: header;
     justify-content: center;
     text-align: center;
+
+    li {
+      display: grid;
+    }
     
     a {
       text-decoration: none;
       min-width: 115px;
       color: $navLinkColor;
-      
       &:visited {
         color: $navLinkColor;
       }
-      
       &:hover {
         background: $navHoverColor;
       }
@@ -116,10 +124,21 @@ body {
     max-width: 800px;
     opacity: 0;
     animation: $fadeInAnimationSettings;
+    justify-self: start;
+    align-self: start;
 
     .articleHeader {
       margin: 30px 0;
     }
+
+    a {
+      text-decoration: none;
+      color: $mainLinkColor;
+      &:visited {
+        color: $visitedLinkColor;
+      }
+    }
+    
   }
 
   .footer {
@@ -158,12 +177,15 @@ body {
     text-align: center;
     animation: $fadeInAnimationSettings;
     animation-delay: 1s;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 
     a {
       text-decoration: none;
+      color: $tertiaryColor;
       
       &:visited {
-        color: $visitedLinkColor;
+        color: $tertiaryColor;
       }
     }
   }
@@ -176,14 +198,14 @@ body {
     grid-template-rows: 0.04fr 1fr 100px;
     grid-template-areas: 
     "header header header" 
-    "rightSidebar content leftSidebar" 
+    "leftSidebar content rightSidebar" 
     "footer footer footer";
   }
   
   .sidebar {
     display: grid;
     margin-top: $sidebarMargin;
-    grid-area: rightSidebar;
+    grid-area: leftSidebar;
     height: calc(100% - $sidebarMargin);
     background: $barColor;
     align-content: start;
@@ -194,10 +216,28 @@ body {
     opacity: 0;
     animation: $fadeInAnimationSettings;
     animation-delay: 1s;
+    //color: $accentColor;
     
     h2 {
       margin-top: 18%;
       margin-bottom: 20px;
+    }
+
+    .latest_article_iter {
+      margin: 20px 0;
+
+      a {
+        text-decoration: none;
+        color: $tertiaryColor;
+
+        &:visited {
+          color: $tertiaryColor;
+        }
+      }
+
+      .sidebar_latest_date {
+        font-size: 16px;
+      }
     }
   }
   

@@ -1,0 +1,26 @@
+{% extends "articles/series.html" %}
+
+{% block content %}
+<h2>This page presents articles sorted by series. You may instead show them by <a href="{% url 'article-list' %}">date</a>.</h2>
+
+    {% for series in series_list %}
+        {% if series.latest_list %}
+            <div class="series-iter">
+                <div class="series-iter-title">
+                    <h3><a href="{{ series.get_absolute_url }}">{{ series }}</a></h3>
+                </div>
+                <div class="series-iter-description">
+                    <p class="series-description">{{ series.description }}</p>
+                </div>
+                <div class="series-iter-articles">
+                    {% for article in series.latest_list %}
+                        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% empty %}
+        No series found!
+    {% endfor %}
+
+{% endblock %}

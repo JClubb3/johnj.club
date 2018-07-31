@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'article_list';
+@import 'series_list';
 
 @mixin navButtonRules {
   background: none;
@@ -31,6 +32,7 @@ body {
   font-size: 20px;
   background: $standardBackground;
   display: grid;
+  overflow-x: hidden;
 
   div {
     display: grid;
@@ -59,6 +61,7 @@ body {
 
     .navCurrentPage {
       color: $barColor;
+      padding-top: 10px;
     }
 
     .siteTitle {
