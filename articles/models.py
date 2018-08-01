@@ -133,3 +133,10 @@ class Article(models.Model):
             self.series.latest_article_date = self.publish_date
             self.series.save()
         super().save(*args, **kwargs)
+
+    @classmethod
+    def get_available_articles(cls):
+        return cls.objects.filter(
+            enabled = True,
+            publish_date__lte = timezone.now()
+        )
