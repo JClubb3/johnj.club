@@ -1,0 +1,38 @@
+@import "variables";
+
+.article-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.5fr 1fr;
+    grid-template-areas:
+        "title rightHalf"
+        "belowTitle rightHalf";
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid $tertiaryColor;
+    border-radius: $standardRadius;
+    background-color: white;
+
+    .article-card-title {
+        grid-area: title;
+        color: $tertiaryColor;
+        font-size: 1.2em;
+        padding-bottom: 5px;
+    }
+
+    .article-card-byline {
+        grid-area: belowTitle;
+        padding-left: 10px;
+    }
+
+    .article-card-shortline {
+        grid-area: rightHalf;
+
+        a {
+            color: $accentColor !important;
+                &:visited {
+                    color: $accentColor !important;
+                }
+        }
+    }
+}

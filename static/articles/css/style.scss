@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'article_list';
-@import 'seriest_list';
+@import 'series_list';
+@import 'article_card';
 
 @mixin navButtonRules {
   background: none;
@@ -32,6 +33,7 @@ body {
   font-size: 20px;
   background: $standardBackground;
   display: grid;
+  overflow-x: hidden;
 
   div {
     display: grid;
@@ -60,6 +62,7 @@ body {
 
     .navCurrentPage {
       color: $barColor;
+      padding-top: 10px;
     }
 
     .siteTitle {
@@ -179,6 +182,7 @@ body {
     animation-delay: 1s;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    color: white;
 
     a {
       text-decoration: none;
@@ -204,9 +208,9 @@ body {
   
   .sidebar {
     display: grid;
-    margin-top: $sidebarMargin;
+    margin-top: calc(#{$sidebarMargin} + 10px);
     grid-area: leftSidebar;
-    height: calc(100% - $sidebarMargin);
+    height: calc(100% - #{$sidebarMargin} - 20px);
     background: $barColor;
     align-content: start;
     padding-left: 5%;
@@ -216,7 +220,7 @@ body {
     opacity: 0;
     animation: $fadeInAnimationSettings;
     animation-delay: 1s;
-    //color: $accentColor;
+    color: white;
     
     h2 {
       margin-top: 18%;

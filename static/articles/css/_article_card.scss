@@ -1,0 +1,33 @@
+@import "variables";
+
+.article-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.5fr 1fr;
+    grid-template-areas:
+        "title rightHalf"
+        "belowTitle rightHalf";
+    margin: 10px;
+    padding: 10px;
+    border-radius: $standardRadius;
+    background-color: white;
+
+    .article-card-title {
+        grid-area: Title;
+    }
+
+    .article-card-byline {
+        grid-area: belowTitle;
+    }
+
+    .article-card-shortline {
+        grid-area: rightHalf;
+
+        a {
+            color: $accentColor;
+                &:visited {
+                    color: $accentColor;
+                }
+        }
+    }
+}

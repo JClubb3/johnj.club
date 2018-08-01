@@ -136,6 +136,7 @@ class Article(models.Model):
 
     @classmethod
     def get_available_articles(cls):
+        # pylint: disable=E1101
         return cls.objects.filter(
             enabled = True,
             publish_date__lte = timezone.now()

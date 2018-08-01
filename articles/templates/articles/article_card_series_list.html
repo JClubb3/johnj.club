@@ -1,0 +1,15 @@
+{% extends "articles/article_card.html" %}
+
+{% block card_title %}
+    <a href="{{ series.get_absolute_url }}">{{ series.name }}</a>
+{% endblock %}
+
+{% block under_title %}
+    {{ series.description }}
+{% endblock %}
+
+{% block right_half %}
+    {% for article in series.latest_list %}
+        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+    {% endfor %}
+{% endblock %}

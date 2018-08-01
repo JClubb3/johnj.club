@@ -1,0 +1,15 @@
+{% extends "articles/article_card.html" %}
+
+{% block card_title %}
+    <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+{% endblock %}
+
+{% block under_title %}
+    <p>By <a href="{{ article.author.get_absolute_url }}">{{ article.author }}</a></p>
+    <p>Published {{ article.publish_date|date:"M. j, Y" }}</p>
+    <p>Part of the <a href="{{ article.series.get_absoulte_url }}">{{ article.series }}</a> series</p>
+{% endblock %}
+
+{% block right_half %}
+    {{ article.shortline }}
+{% endblock %}

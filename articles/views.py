@@ -22,15 +22,16 @@ class AuthorDetailView(generic.DetailView):
 
 class SeriesListView(generic.ListView):
     model = Series
-    paginate_by = 7
-
 
 class SeriesDetailView(generic.DetailView):
     model = Series
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["article_list"] = Article.get_available_articles()
+        context["article_list"] = self.object.article_set.filter(
+            enabled = True,
+            publish_date__lte = timezone.now()
+        )
         return context
 
 

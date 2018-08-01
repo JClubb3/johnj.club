@@ -9,17 +9,7 @@
     </div>
     <div class="series-article-iter-holder">
         {% for article in article_list %}
-            <div class="series-article-iter">
-                <div class="series-article-iter-title">
-                    <h5><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h5>
-                </div>
-                <div class="series-article-iter-byline">
-                    Posted by <a href="{{ article.get_absolute_url }}">{{ article.author }}</a> on {{ article.publish_date}}
-                </div>
-                <div class="series-article-iter-shortline">
-                    <em>{{ article.shortline }}</em>
-                </div>
-            </div>
+            {% include "articles/article_card_series_detail.html" %}
         {% endfor %}
     </div>
 {% endblock %}
