@@ -20,10 +20,10 @@
       <div class="navDiv">
         <ul class="navitems">
           <li><a href="{% url 'index' %}">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Portfolio</a></li>
+          <li><a href="{{ about_link }}">About</a></li>
+          <li><a href="{{ portfolio_link }}">Portfolio</a></li>
           <li><a href="{% url 'article-list' %}">Articles</a></li>
-          <li><a href="#">Wyverns & Whimsy</a></li>
+          <li><a href="{{ wyverns_link }}">Wyverns &amp; Whimsy</a></li>
         </ul>
       </div>
       <button class="hamburger">&#9776;</button>
