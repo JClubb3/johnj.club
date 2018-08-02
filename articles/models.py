@@ -71,7 +71,7 @@ class Series(models.Model):
         return self.article_set.filter(
             enabled = True,
             publish_date__lte = timezone.now()
-        )[:1]
+        )[:1][0]
 
     class Meta:
         verbose_name_plural = "series"
@@ -141,3 +141,6 @@ class Article(models.Model):
             enabled = True,
             publish_date__lte = timezone.now()
         )
+
+    def visible(self) -> bool:
+        return self.enabled and self.publish_date <= timezone.now()

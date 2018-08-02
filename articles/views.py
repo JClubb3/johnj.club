@@ -3,7 +3,7 @@ import datetime
 from django.shortcuts import render
 from django.views import generic
 from django.utils import timezone
-from django.db.models import F
+from django.http import Http404
 
 from .models import Article, Author, Series, Tag
 
@@ -51,4 +51,10 @@ class ArticleListView(generic.ListView):
 
 class ArticleDetailView(generic.DetailView):
     #pylint: disable=E1101
-    queryset = Article.get_available_articles()
+    model = Article
+    
+    def get_object(self):
+        a = super().get_object()
+        if not a.visible():
+            raise Http404
+        return a
