@@ -1,0 +1,8 @@
+<div class="midbar">
+    <div class="midbarContent">
+        {% block midbar %}
+        <h2>Latest Post ({{ latest_article.publish_date|date:"M. j, Y"}}):</h2>
+        <h4><a href="{{ latest_article.get_absolute_url }}">{{ latest_article.title }}</a></h4>
+        {% endblock %}
+    </div>
+</div>

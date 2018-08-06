@@ -1,0 +1,88 @@
+@import "variables";
+
+@mixin navButtonRules {
+  background: none;
+  align-self: center;
+  color: #999;
+  border: 0;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  z-index: 1000000;
+  max-height: 50px;
+}
+
+.nav {
+  grid-area: header;
+  display: flex;
+  flex-direction: column;
+  //outline: 1px solid red;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  background: $navBarColor;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  font-size: 18px;
+  position: fixed;
+  z-index: 100000000;
+
+  .navCurrentPage {
+    color: $barColor;
+    padding-top: 10px;
+  }
+
+  .siteTitle {
+    width: 80px;
+    //height: 50px;
+    position: absolute;
+    top: 10px;
+    left: calc(50% - 180px);
+    border: 1px solid red;
+    word-break: break-all;
+    color: green;
+
+    a {
+      text-decoration: none;
+      &:visited {
+        color: inherit;
+      }
+    }
+  }
+
+  .hamburger {
+    @include navButtonRules();
+    line-height: 45px;
+    padding: 5px 15px 0px 15px;
+    font-size: 1.4em;
+  }
+
+  .cross {
+    @include navButtonRules();
+    padding: 7px 15px 0px 15px;
+    font-size: 3em;
+    line-height: 65px;
+  }
+}
+  
+.navDiv {
+  grid-area: header;
+  justify-content: center;
+  text-align: center;
+
+  li {
+    display: grid;
+  }
+  
+  a {
+    text-decoration: none;
+    min-width: 115px;
+    color: $navLinkColor;
+    &:visited {
+      color: $navLinkColor;
+    }
+    &:hover {
+      background: $navHoverColor;
+    }
+  }
+}

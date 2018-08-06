@@ -1,0 +1,24 @@
+<div class="sidebar">
+    <div class="sidebarContent">
+        {% block sidebar %}
+        {% block sidebar_top %}
+        {% endblock %}
+        <h2>Latest Posts:</h2>
+        <!--<h4>Welcome to the site!</h4>
+        <p>
+            <strong>2-1-2018</strong>
+        </p> 
+        <p>This site is finally up, after lots of hard work...</p>-->
+        {% for article in latest_articles %}
+            <div class="latest_article_iter">
+            <h4><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h4>
+            <h5><em><a href="{% url 'series-detail' article.series %}">{{ article.series.name }}</a></em></h5>
+            <p class="sidebar_latest_date"><strong>{{ article.publish_date|date:"M. j, Y" }}</strong></p>
+            <p>{{ article.shortline }}</p>
+            </div>
+        {% endfor %}
+        {% block sidebar_bottom %}
+        {% endblock %}
+        {% endblock %}
+    </div>
+</div>
