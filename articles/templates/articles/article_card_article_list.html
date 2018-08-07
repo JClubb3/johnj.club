@@ -7,7 +7,7 @@
 {% block under_title %}
     <p>By <a href="{{ article.author.get_absolute_url }}">{{ article.author }}</a></p>
     <p>Published {{ article.publish_date|date:"M. j, Y" }}</p>
-    <p>Part of the <a href="{{ article.series.get_absoulte_url }}">{{ article.series }}</a> series</p>
+    <p>Part of the <a href="{{ article.series.get_absolute_url }}">{{ article.series }}</a> series</p>
 {% endblock %}
 
 {% block right_half %}

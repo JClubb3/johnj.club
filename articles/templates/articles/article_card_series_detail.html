@@ -1,1 +1,6 @@
-{% include "articles/article_card_article_list.html" %}
+{% extends "articles/article_card_article_list.html" %}
+
+{% block under_title %}
+    <p>By <a href="{{ article.author.get_absolute_url }}">{{ article.author }}</a></p>
+    <p>Published {{ article.publish_date|date:"M. j, Y" }}</p>
+{% endblock %}
