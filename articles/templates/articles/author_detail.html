@@ -16,9 +16,9 @@
         <div class="author-name">
             <h2>{{ author }}</h2>
         </div>
-        {% if author.image %}
+        {% if author.image_full %}
             <div class="author-image">
-                <img src="{{ author.image.url }}">
+                <img src="{{ author.image_full.url }}">
             </div>
         {% endif %}
     </div>

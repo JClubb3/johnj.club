@@ -1,17 +1,60 @@
 import datetime
+import sys
 
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from django.db.models.query import QuerySet
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from PIL import Image
+from io import BytesIO
 
+from johnjclub import settings
+
+def _create_image(instance: models.Model, size: tuple, suffix: str) -> InMemoryUploadedFile:
+    # Image conversion code, adapted from https://djangosnippets.org/snippets/10597/
+    image = Image.open(instance.image_raw)
+    output = BytesIO()
+    base_name = instance.image_raw.name.split(".")[0]
+
+    resized = image.copy()
+    resized.thumbnail(size, Image.ANTIALIAS)
+    resized_name = "{0}_{1}.png".format(base_name, suffix)
+    resized.save(output, format="PNG", quality=100)
+    output.seek(0)
+    prepped_image = InMemoryUploadedFile(
+        output,
+        'ImageField',
+        resized_name,
+        'image/png',
+        sys.getsizeof(output),
+        None
+    )
+    return prepped_image
+
+def create_image_thumbnail(instance: models.Model):
+    img = _create_image(instance, settings.IMAGE_THUMBNAIL_SIZE, "thumbnail")
+    instance.image_thumbnail = img
+
+def create_image_full(instance:models.Model):
+    img = _create_image(instance, settings.IMAGE_FULL_SIZE, "full")
+    instance.image_full = img
 
 # Create your models here.
 class Author(models.Model):
     name = models.CharField(max_length=200, unique=True)
     bio = models.TextField(help_text="I mean. It's a bio.")
-    image = models.ImageField(blank=True, upload_to="uploads/")
+    image_raw = models.ImageField(blank=True, upload_to="uploads/")
+    image_thumbnail = models.ImageField(
+        blank=True, 
+        upload_to="uploads/", 
+        editable=False)
+    image_full = models.ImageField(
+        blank = True,
+        upload_to = "uploads/",
+        editable = False
+    )
     slug = models.SlugField(
         help_text = "A no space name to be used for URLs",
         blank = True,
@@ -29,6 +72,11 @@ class Author(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+        if self.image_raw:
+            if not self.image_thumbnail:
+                create_image_thumbnail(self)
+            if not self.image_full:
+                create_image_full(self)
         super().save(*args, **kwargs)
 
 class Series(models.Model):
@@ -40,7 +88,16 @@ class Series(models.Model):
         editable = False,
         blank = True
     )
-    image = models.ImageField(upload_to="uploads/", blank=True)
+    image_raw = models.ImageField(blank=True, upload_to="uploads/")
+    image_thumbnail = models.ImageField(
+        blank=True, 
+        upload_to="uploads/", 
+        editable=False)
+    image_full = models.ImageField(
+        blank = True,
+        upload_to = "uploads/",
+        editable = False
+    )
     latest_article_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
@@ -53,6 +110,11 @@ class Series(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+        if self.image_raw:
+            if not self.image_thumbnail:
+                create_image_thumbnail(self)
+            if not self.image_full:
+                create_image_full(self)
         super().save(*args, **kwargs)
 
     def latest_list(self) -> QuerySet:
@@ -103,7 +165,16 @@ class Article(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     series = models.ForeignKey('Series', on_delete=models.SET_DEFAULT, default=0)
     tags = models.ManyToManyField('Tag')
-    image = models.ImageField(upload_to="uploads/", blank=True)
+    image_raw = models.ImageField(blank=True, upload_to="uploads/")
+    image_thumbnail = models.ImageField(
+        blank=True, 
+        upload_to="uploads/", 
+        editable=False)
+    image_full = models.ImageField(
+        blank = True,
+        upload_to = "uploads/",
+        editable = False
+    )
     enabled = models.BooleanField(default=True)
 
     class Meta:
@@ -132,6 +203,11 @@ class Article(models.Model):
         if self.series.latest_article_date is None or self.series.latest_article_date < self.publish_date:
             self.series.latest_article_date = self.publish_date
             self.series.save()
+        if self.image_raw:
+            if not self.image_thumbnail:
+                create_image_thumbnail(self)
+            if not self.image_full:
+                create_image_full(self)
         super().save(*args, **kwargs)
 
     @classmethod

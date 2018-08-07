@@ -34,6 +34,7 @@ class AuthorDetailView(generic.DetailView):
 
 class SeriesListView(generic.ListView):
     model = Series
+    paginate_by = 7
 
 class SeriesDetailView(generic.DetailView):
     model = Series
