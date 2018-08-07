@@ -266,8 +266,9 @@
 }
 
 .pagination {
-  margin: auto;
-  margin-top: 20px;
+  margin: auto auto 0 auto;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
 }
 
 .pagination .page_button {
@@ -349,13 +350,19 @@ body div {
   grid-area: content;
   margin: 8%;
   max-width: 800px;
+  min-height: calc(100% - 130px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   opacity: 0;
   -webkit-animation: fadeIn 1.25s ease-in 0s both;
           animation: fadeIn 1.25s ease-in 0s both;
-  -ms-grid-column-align: start;
-      justify-self: start;
+  justify-self: start;
   -ms-flex-item-align: start;
-      -ms-grid-row-align: start;
       align-self: start;
 }
 

@@ -45,6 +45,9 @@ body {
     grid-area: content;
     margin: 8%;
     max-width: 800px;
+    min-height: calc(100% - 130px);
+    display: flex;
+    flex-direction: column;
     opacity: 0;
     animation: $fadeInAnimationSettings;
     justify-self: start;
