@@ -246,6 +246,34 @@
   color: #e8461e;
 }
 
+.pagination {
+  margin: auto;
+  margin-top: 20px;
+}
+
+.pagination .page_button {
+  padding: 10px 25px;
+  margin: 5px;
+  background: #32e81e;
+  color: white !important;
+  width: 90px;
+  border: 2px outset buttonface;
+}
+
+.pagination .page_right {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.pagination .page_left {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.pagination .hidden {
+  visibility: hidden;
+}
+
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;

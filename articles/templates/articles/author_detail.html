@@ -31,7 +31,7 @@
             {% include "articles/article_card_article_list.html" %}
         {% endfor %}
     </div>
-    {% if author_articles.has_next %}
+    {% if author_articles.has_next or author_articles.has_previous %}
         {% include "articles/pagination.html" with page_obj=author_articles%}
     {% endif %}
 {% endblock %}

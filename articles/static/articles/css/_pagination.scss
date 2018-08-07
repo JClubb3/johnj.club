@@ -1,0 +1,29 @@
+@import 'variables';
+
+.pagination {
+    margin: auto;
+    margin-top: 20px;
+
+    .page_button {
+        padding: 10px 25px;
+        margin: 5px;
+        background: $tertiaryColor;
+        color: white !important;
+        width: 90px;
+        border: 2px outset buttonface;
+    }
+
+    .page_right {
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    .page_left {
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
+}
