@@ -12,6 +12,7 @@
     border: 1px solid $secondaryColor;
     border-radius: $standardRadius;
     background-color: white;
+    max-width: 70%;
 
     .article-card-title {
         grid-area: title;

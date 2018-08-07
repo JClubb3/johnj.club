@@ -1,22 +1,24 @@
 {% extends "articles/articles.html" %}
 
-{% block article_title %}
-    {{ article.title }}
-{% endblock %}
-
 {% block article_header %}
-    <h5>Posted by <a href="{{ article.author.get_absolute_url }}">{{ article.author }}</a> on {{ article.publish_date|date:"M. j, Y" }}</h5>
-    {% if article.has_been_modified %}
-        <h5><em>Last modified: {{ article.date_modified }}</em></h5>
-    {% endif %}
-    <h5>Part of the <a href="{{ article.series.get_absolute_url }}">{{ article.series }}</a> series</h5>
-    <br>
-    <em>{{ article.shortline }}</em>
+    <div class="article-title-image">
+        <h2{% if not article.image_full %}style="margin:auto;"{% endif %}>{{ article.title }}</h2>
+        {% if article.image_full %}
+            <img src="{{ article.image_full.url }}">
+        {% endif %}
+    </div>
+    <div class="article-data">
+        <h5>Posted by <a href="{{ article.author.get_absolute_url }}">{{ article.author }}</a> on {{ article.publish_date|date:"M. j, Y" }}</h5>
+        {% if article.has_been_modified %}
+            <h5><em>Last modified: {{ article.date_modified }}</em></h5>
+        {% endif %}
+        <h5>Part of the <a href="{{ article.series.get_absolute_url }}">{{ article.series }}</a> series</h5>
+        <br>
+        <em>{{ article.shortline }}</em>
+    </div>
 {% endblock %}
 
 {% block article_content %}
-    {% if article.image %}
-    {% endif %}
     {{ article.content }}
 {% endblock %}
 

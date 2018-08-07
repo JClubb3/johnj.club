@@ -1,0 +1,19 @@
+@import 'variables';
+
+.article-title-image {
+    display: flex;
+
+    h2 {
+        align-self: center;
+    }
+
+    img {
+        margin-left: auto;
+        border-radius: $standardRadius
+    }
+}
+
+.article-data {
+    text-align: center;
+    margin-top: $articlePaddingBase;
+}

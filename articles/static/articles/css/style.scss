@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'navigation';
 @import 'article_list';
+@import 'article_detail';
 @import 'series_list';
 @import 'series_detail';
 @import 'article_card';
@@ -36,16 +37,17 @@ body {
 
 .gridContainer {
   grid-template-columns: 1fr;
-  grid-template-rows: 60px 60px 1fr 100px;
+  grid-template-rows: 90px 60px 1fr 100px;
   grid-template-areas: "header" "midbar" "content" "footer";
   overflow-y: scroll;
 
 
   .content {
     grid-area: content;
-    margin: 8%;
+    padding: $articlePaddingBase $articlePaddingBase * 2;
     max-width: 800px;
-    min-height: calc(100% - 130px);
+    min-width: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     opacity: 0;
@@ -104,7 +106,7 @@ body {
   
   .gridContainer {
     grid-template-columns: 15% 1fr 15%;
-    grid-template-rows: 0.04fr 1fr 100px;
+    grid-template-rows: 90px 1fr 100px;
     grid-template-areas: 
     "header header header" 
     "leftSidebar content rightSidebar" 
@@ -113,7 +115,7 @@ body {
   
   .sidebar {
     display: grid;
-    margin-top: calc(#{$sidebarMargin} + 10px);
+    margin-top: $sidebarMargin;
     grid-area: leftSidebar;
     height: calc(100% - #{$sidebarMargin} - 20px);
     background: $barColor;
