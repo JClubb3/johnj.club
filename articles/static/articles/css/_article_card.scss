@@ -9,15 +9,20 @@
         "belowTitle rightHalf";
     margin: 10px;
     padding: 10px;
-    border: 1px solid $tertiaryColor;
+    border: 1px solid $secondaryColor;
     border-radius: $standardRadius;
     background-color: white;
 
     .article-card-title {
         grid-area: title;
-        color: $tertiaryColor;
         font-size: 1.2em;
         padding-bottom: 5px;
+        a {
+            color: $accentColor !important;
+            &:visited {
+                color: $accentColor !important;
+            }
+        }
     }
 
     .article-card-byline {
@@ -27,12 +32,5 @@
 
     .article-card-shortline {
         grid-area: rightHalf;
-
-        a {
-            color: $accentColor !important;
-                &:visited {
-                    color: $accentColor !important;
-                }
-        }
     }
 }

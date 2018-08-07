@@ -1,0 +1,17 @@
+@import 'variables';
+
+.series-title-image-container {
+    display: flex;
+
+    .series-title {
+        align-self: center;
+    }
+
+    img {
+        margin-left: auto;
+    }
+}
+
+.series-description {
+    margin-bottom: 20px;
+}
