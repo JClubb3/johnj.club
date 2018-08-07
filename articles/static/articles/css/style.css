@@ -172,6 +172,7 @@
 
 .series-title-image-container img {
   margin-left: auto;
+  border-radius: 10%;
 }
 
 .series-description {
@@ -237,6 +238,10 @@
 
 .author-name-image .author-image {
   margin-left: auto;
+}
+
+.author-name-image .author-image img {
+  border-radius: 10%;
 }
 
 .author-bio {
