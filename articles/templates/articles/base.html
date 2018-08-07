@@ -50,7 +50,9 @@
         </div>
       {% endblock %}
       {% block pagination %}
-        {% include "articles/pagination.html" %}
+        {% if is_paginated %}
+            {% include "articles/pagination.html" %}
+        {% endif %}
       {% endblock %}
     </div>
 

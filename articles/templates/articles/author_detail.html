@@ -1,0 +1,39 @@
+{% extends "articles/base.html" %}
+
+{% load static %}
+
+{% block title %}
+    <title>{{ author }} | {{ site_title }}</title>
+{% endblock %}
+
+{% block current_page_name %}
+    {{ author }}
+{% endblock %}
+
+
+{% block content %}
+    <div class="author-name-image">
+        <div class="author-name">
+            <h2>{{ author }}</h2>
+        </div>
+        {% if author.image %}
+            <div class="author-image">
+                <img src="{{ author.image.url }}">
+            </div>
+        {% endif %}
+    </div>
+    <div class="author-bio">
+        {{ author.bio|safe }}
+    </div>
+    <div class="author-article-list-container">
+        <h4>Articles by this author:</h4>
+        {% for article in author_articles %}
+            {% include "articles/article_card_article_list.html" %}
+        {% endfor %}
+    </div>
+    {% if author_articles.has_next %}
+        {% include "articles/pagination.html" with page_obj=author_articles%}
+    {% endif %}
+{% endblock %}
+
+

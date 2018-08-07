@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views import generic
 from django.utils import timezone
 from django.http import Http404
+from django.core.paginator import Paginator
 
 from .models import Article, Author, Series, Tag
 
@@ -18,6 +19,17 @@ def index(request):
 
 class AuthorDetailView(generic.DetailView):
     model = Author
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        author_article_list = self.object.article_set.filter(
+            enabled = True,
+            publish_date__lte = timezone.now()
+        )
+        paginator = Paginator(author_article_list, 7)
+        page = self.request.GET.get('page')
+        context["author_articles"] = paginator.get_page(page)
+        return context
 
 
 class SeriesListView(generic.ListView):

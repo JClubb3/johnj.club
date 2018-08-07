@@ -1,0 +1,16 @@
+.author-name-image {
+    display: flex;
+
+    .author-name {
+        align-self: center;
+    }
+
+    .author-image {
+        margin-left: auto;
+    }
+}
+
+.author-bio {
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
