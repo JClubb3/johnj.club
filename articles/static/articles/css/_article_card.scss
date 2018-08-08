@@ -12,14 +12,16 @@
     border: 1px solid $secondaryColor;
     border-radius: $standardRadius;
     background: linear-gradient(165deg, white 40%, $primaryColor);
-    max-width: 70%;
+    max-width: 740px;
 
     .article-card-title {
         grid-area: title;
         font-size: 1.2em;
         padding-bottom: 5px;
+        
         a {
             color: $accentColor !important;
+            
             &:visited {
                 color: $accentColor !important;
             }

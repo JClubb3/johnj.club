@@ -184,6 +184,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin-top: 20px;
 }
 
 .series-title-image-container .series-title {
@@ -214,7 +215,7 @@
   border: 1px solid #1e46e8;
   border-radius: 10px;
   background: linear-gradient(165deg, white 40%, #1ee8c0);
-  max-width: 70%;
+  max-width: 740px;
 }
 
 .article-card .article-card-title {
