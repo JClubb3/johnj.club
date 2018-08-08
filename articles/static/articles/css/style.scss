@@ -29,6 +29,7 @@ body {
   background: $standardBackground;
   display: grid;
   overflow-x: hidden;
+  font-family: 'Source Sans Pro', sans-serif;
 
   div {
     display: grid;
@@ -81,7 +82,7 @@ body {
     grid-area: midbar;
     background: $barColor;
     width: 93%;
-    margin-top: 50px;
+    margin-top: 30px;
     padding-left: 5%;
     height: 100%;
     text-align: center;
@@ -136,6 +137,10 @@ body {
 
     .latest_article_iter {
       margin: 20px 0;
+
+      &:last-child {
+        padding-bottom: 20px;
+      }
 
       a {
         text-decoration: none;
