@@ -45,7 +45,8 @@ body {
 
   .content {
     grid-area: content;
-    padding: $articlePaddingBase $articlePaddingBase * 2;
+    padding: 0 $articlePaddingBase $articlePaddingBase * 2 $articlePaddingBase;
+    margin-top: $articlePaddingBase;
     max-width: 800px;
     min-width: 100%;
     min-height: 100%;

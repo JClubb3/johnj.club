@@ -413,7 +413,8 @@ body div {
   -ms-grid-row: 3;
   -ms-grid-column: 1;
   grid-area: content;
-  padding: 40px 80px;
+  padding: 0 40px 80px 40px;
+  margin-top: 40px;
   max-width: 800px;
   min-width: 100%;
   min-height: 100%;
