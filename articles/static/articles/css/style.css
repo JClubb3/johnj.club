@@ -213,7 +213,7 @@
   padding: 10px;
   border: 1px solid #1e46e8;
   border-radius: 10px;
-  background-color: white;
+  background: linear-gradient(165deg, white 40%, #1ee8c0);
   max-width: 70%;
 }
 
@@ -245,6 +245,29 @@
   -ms-grid-row-span: 2;
   -ms-grid-column: 2;
   grid-area: rightHalf;
+  z-index: 1000;
+}
+
+.article-card .article-card-shortline .article-card-article-link {
+  -ms-grid-column-align: start;
+      justify-self: start;
+  -ms-flex-item-align: start;
+      -ms-grid-row-align: start;
+      align-self: start;
+}
+
+.article-card .article-card-background-div {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 2;
+  grid-area: rightHalf;
+  position: relative;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-position: center right;
+  width: 127px;
+  -ms-grid-column-align: end;
+      justify-self: end;
 }
 
 .author-name-image {

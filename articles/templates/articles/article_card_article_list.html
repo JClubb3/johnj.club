@@ -13,3 +13,11 @@
 {% block right_half %}
     {{ article.shortline }}
 {% endblock %}
+
+{% block background_div_tags %}
+    {% if article.image_thumbnail_transparent %}
+        style="background-image: url('{{ article.image_thumbnail_transparent.url }}')"
+    {% elif article.series.image_thumbnail_transparent %}
+        style="background-image: url('{{ article.series.image_thumbnail_transparent.url }}')"
+    {% endif %}
+{% endblock %}

@@ -12,7 +12,12 @@ from io import BytesIO
 
 from johnjclub import settings
 
-def _create_image(instance: models.Model, size: tuple, suffix: str) -> InMemoryUploadedFile:
+def _create_image(
+    instance: models.Model, 
+    size: tuple, 
+    suffix: str,
+    set_alpha: bool = False
+    ) -> InMemoryUploadedFile:
     # Image conversion code, adapted from https://djangosnippets.org/snippets/10597/
     image = Image.open(instance.image_raw)
     output = BytesIO()
@@ -21,8 +26,13 @@ def _create_image(instance: models.Model, size: tuple, suffix: str) -> InMemoryU
     resized = image.copy()
     resized.thumbnail(size, Image.ANTIALIAS)
     resized_name = "{0}_{1}.png".format(base_name, suffix)
+    
+    if set_alpha:
+        resized.putalpha(127)
+
     resized.save(output, format="PNG", quality=100)
     output.seek(0)
+    
     prepped_image = InMemoryUploadedFile(
         output,
         'ImageField',
@@ -37,7 +47,11 @@ def create_image_thumbnail(instance: models.Model):
     img = _create_image(instance, settings.IMAGE_THUMBNAIL_SIZE, "thumbnail")
     instance.image_thumbnail = img
 
-def create_image_full(instance:models.Model):
+def create_image_thumbnail_transparent(instance: models.Model):
+    img = _create_image(instance, settings.IMAGE_THUMBNAIL_SIZE, "thumbnail_transparent", set_alpha=True)
+    instance.image_thumbnail_transparent = img
+
+def create_image_full(instance: models.Model):
     img = _create_image(instance, settings.IMAGE_FULL_SIZE, "full")
     instance.image_full = img
 
@@ -47,9 +61,14 @@ class Author(models.Model):
     bio = models.TextField(help_text="I mean. It's a bio.")
     image_raw = models.ImageField(blank=True, upload_to="uploads/")
     image_thumbnail = models.ImageField(
-        blank=True, 
-        upload_to="uploads/", 
-        editable=False)
+        blank = True, 
+        upload_to = "uploads/", 
+        editable = False)
+    image_thumbnail_transparent = models.ImageField(
+        blank = True,
+        upload_to = "uploads/",
+        editable = False
+    )
     image_full = models.ImageField(
         blank = True,
         upload_to = "uploads/",
@@ -75,6 +94,8 @@ class Author(models.Model):
         if self.image_raw:
             if not self.image_thumbnail:
                 create_image_thumbnail(self)
+            if not self.image_thumbnail_transparent:
+                create_image_thumbnail_transparent(self)
             if not self.image_full:
                 create_image_full(self)
         super().save(*args, **kwargs)
@@ -93,6 +114,11 @@ class Series(models.Model):
         blank=True, 
         upload_to="uploads/", 
         editable=False)
+    image_thumbnail_transparent = models.ImageField(
+        blank = True,
+        upload_to = "uploads/",
+        editable = False
+    )
     image_full = models.ImageField(
         blank = True,
         upload_to = "uploads/",
@@ -113,6 +139,8 @@ class Series(models.Model):
         if self.image_raw:
             if not self.image_thumbnail:
                 create_image_thumbnail(self)
+            if not self.image_thumbnail_transparent:
+                create_image_thumbnail_transparent(self)
             if not self.image_full:
                 create_image_full(self)
         super().save(*args, **kwargs)
@@ -170,6 +198,11 @@ class Article(models.Model):
         blank=True, 
         upload_to="uploads/", 
         editable=False)
+    image_thumbnail_transparent = models.ImageField(
+        blank = True,
+        upload_to = "uploads/",
+        editable = False
+    )
     image_full = models.ImageField(
         blank = True,
         upload_to = "uploads/",
@@ -206,6 +239,8 @@ class Article(models.Model):
         if self.image_raw:
             if not self.image_thumbnail:
                 create_image_thumbnail(self)
+            if not self.image_thumbnail_transparent:
+                create_image_thumbnail_transparent(self)
             if not self.image_full:
                 create_image_full(self)
         super().save(*args, **kwargs)

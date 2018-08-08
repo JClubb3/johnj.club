@@ -2,7 +2,7 @@
 
 {% block article_header %}
     <div class="article-title-image">
-        <h2{% if not article.image_full %}style="margin:auto;"{% endif %}>{{ article.title }}</h2>
+        <h2{% if not article.image_full %} style="margin:auto;"{% endif %}>{{ article.title }}</h2>
         {% if article.image_full %}
             <img src="{{ article.image_full.url }}">
         {% endif %}

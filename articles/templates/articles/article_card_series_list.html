@@ -10,6 +10,12 @@
 
 {% block right_half %}
     {% for article in series.latest_list %}
-        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+        <a class="article-card-article-link" href="{{ article.get_absolute_url }}">{{ article.title }}</a>
     {% endfor %}
+{% endblock %}
+
+{% block background_div_tags %}
+    {% if series.image_thumbnail_transparent %}
+        style="background-image: url('{{ series.image_thumbnail_transparent.url }}')"
+    {% endif %}
 {% endblock %}

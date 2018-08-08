@@ -11,7 +11,7 @@
     padding: 10px;
     border: 1px solid $secondaryColor;
     border-radius: $standardRadius;
-    background-color: white;
+    background: linear-gradient(165deg, white 40%, $primaryColor);
     max-width: 70%;
 
     .article-card-title {
@@ -33,5 +33,21 @@
 
     .article-card-shortline {
         grid-area: rightHalf;
+        z-index: 1000;
+
+        .article-card-article-link {
+            justify-self: start;
+            align-self: start;
+        }
+    }
+
+    .article-card-background-div {
+        grid-area: rightHalf;
+        position: relative;
+        border-radius: $standardRadius;
+        background-repeat: no-repeat;
+        background-position: center right;
+        width: 127px;
+        justify-self: end;
     }
 }
