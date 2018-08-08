@@ -20,5 +20,12 @@
 
 {% block article_content %}
     {{ article.content }}
+    {% if article.audio %}
+        <div class="article-audio">
+            <audio controls src="{{ article.audio.url }}">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    {% endif %}
 {% endblock %}
 

@@ -17,3 +17,14 @@
     text-align: center;
     margin-top: $articlePaddingBase;
 }
+
+.article-audio {
+    margin-top: 20px;
+    
+    audio {
+        margin-top: 20px;
+        margin: auto;
+        border-radius: 10px;
+        background-color: $secondaryColor;
+    }
+}

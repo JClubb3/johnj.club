@@ -62,15 +62,18 @@ class Author(models.Model):
     image_raw = models.ImageField(blank=True, upload_to="uploads/")
     image_thumbnail = models.ImageField(
         blank = True, 
+        null = True,
         upload_to = "uploads/", 
         editable = False)
     image_thumbnail_transparent = models.ImageField(
         blank = True,
+        null = True,
         upload_to = "uploads/",
         editable = False
     )
     image_full = models.ImageField(
         blank = True,
+        null = True,
         upload_to = "uploads/",
         editable = False
     )
@@ -109,18 +112,25 @@ class Series(models.Model):
         editable = False,
         blank = True
     )
-    image_raw = models.ImageField(blank=True, upload_to="uploads/")
+    image_raw = models.ImageField(
+        blank = True, 
+        null = True,
+        upload_to="uploads/"
+    )
     image_thumbnail = models.ImageField(
-        blank=True, 
-        upload_to="uploads/", 
-        editable=False)
+        blank = True, 
+        null = True,
+        upload_to = "uploads/", 
+        editable = False)
     image_thumbnail_transparent = models.ImageField(
         blank = True,
+        null = True,
         upload_to = "uploads/",
         editable = False
     )
     image_full = models.ImageField(
         blank = True,
+        null = True,
         upload_to = "uploads/",
         editable = False
     )
@@ -193,20 +203,33 @@ class Article(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     series = models.ForeignKey('Series', on_delete=models.SET_DEFAULT, default=0)
     tags = models.ManyToManyField('Tag')
-    image_raw = models.ImageField(blank=True, upload_to="uploads/")
+    image_raw = models.ImageField(
+        blank = True, 
+        null = True,
+        upload_to = "uploads/images"
+    )
     image_thumbnail = models.ImageField(
-        blank=True, 
-        upload_to="uploads/", 
-        editable=False)
+        blank = True, 
+        null = True,
+        upload_to = "uploads/images", 
+        editable = False
+    )
     image_thumbnail_transparent = models.ImageField(
         blank = True,
-        upload_to = "uploads/",
+        null = True,
+        upload_to = "uploads/images",
         editable = False
     )
     image_full = models.ImageField(
         blank = True,
-        upload_to = "uploads/",
+        null = True,
+        upload_to = "uploads/images",
         editable = False
+    )
+    audio = models.FileField(
+        upload_to = "uploads/audio",
+        blank = True,
+        null = True
     )
     enabled = models.BooleanField(default=True)
 

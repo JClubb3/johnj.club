@@ -138,6 +138,17 @@
   margin-top: 40px;
 }
 
+.article-audio {
+  margin-top: 20px;
+}
+
+.article-audio audio {
+  margin-top: 20px;
+  margin: auto;
+  border-radius: 10px;
+  background-color: #1e46e8;
+}
+
 .series-iter {
   margin: 10px;
   padding: 10px;
