@@ -1,4 +1,4 @@
-<div class="midbar">
+<div class="midbar"{% if request.path == latest_article.get_absolute_url %} style="visibility: hidden;"{% endif %}>
     <div class="midbarContent">
         {% block midbar %}
         <h2>Latest Post ({{ latest_article.publish_date|date:"M. j, Y"}}):</h2>
