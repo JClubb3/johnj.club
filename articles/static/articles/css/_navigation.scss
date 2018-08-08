@@ -28,8 +28,17 @@
   z-index: 100000000;
 
   .navCurrentPage {
-    color: $barColor;
     padding-top: 10px;
+    color: $barColor;
+    
+    a {
+      color: $barColor !important;
+      text-decoration: none;
+
+      &:visited {
+        color: $barColor !important;
+      }
+    }
   }
 
   .siteTitle {

@@ -23,8 +23,17 @@
 }
 
 .nav .navCurrentPage {
-  color: #1e46e8;
   padding-top: 10px;
+  color: #1e46e8;
+}
+
+.nav .navCurrentPage a {
+  color: #1e46e8 !important;
+  text-decoration: none;
+}
+
+.nav .navCurrentPage a:visited {
+  color: #1e46e8 !important;
 }
 
 .nav .siteTitle {

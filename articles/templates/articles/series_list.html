@@ -1,7 +1,7 @@
 {% extends "articles/series.html" %}
 
 {% block content %}
-<h2>This page presents articles sorted by series. You may instead show them by <a href="{% url 'article-list' %}">date</a>.</h2>
+<h2>Listing articles by series. Show by <a href="{% url 'article-list' %}">date</a>?</h2>
 
     {% for series in series_list %}
         {% if series.latest_list %}
