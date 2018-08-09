@@ -64,18 +64,19 @@ class Author(models.Model):
         blank = True, 
         null = True,
         upload_to = "uploads/", 
-        editable = False)
+        help_text = "Will be auto-generated from image_raw; leave blank"
+    )
     image_thumbnail_transparent = models.ImageField(
         blank = True,
         null = True,
         upload_to = "uploads/",
-        editable = False
+        help_text = "Will be auto-generated from image_raw; leave blank"
     )
     image_full = models.ImageField(
         blank = True,
         null = True,
         upload_to = "uploads/",
-        editable = False
+        help_text = "Will be auto-generated from image_raw; leave blank"
     )
     slug = models.SlugField(
         help_text = "A no space name to be used for URLs",
@@ -121,18 +122,19 @@ class Series(models.Model):
         blank = True, 
         null = True,
         upload_to = "uploads/", 
-        editable = False)
+        help_text = "Will be auto-generated from image_raw; leave blank"
+    )
     image_thumbnail_transparent = models.ImageField(
         blank = True,
         null = True,
         upload_to = "uploads/",
-        editable = False
+        help_text = "Will be auto-generated from image_raw; leave blank"
     )
     image_full = models.ImageField(
         blank = True,
         null = True,
         upload_to = "uploads/",
-        editable = False
+        help_text = "Will be auto-generated from image_raw; leave blank"
     )
     latest_article_date = models.DateTimeField(null=True, blank=True)
 
@@ -212,19 +214,19 @@ class Article(models.Model):
         blank = True, 
         null = True,
         upload_to = "uploads/images", 
-        editable = False
+        help_text = "Will be auto-generated from image_raw; leave blank"
     )
     image_thumbnail_transparent = models.ImageField(
         blank = True,
         null = True,
         upload_to = "uploads/images",
-        editable = False
+        help_text = "Will be auto-generated from image_raw; leave blank"
     )
     image_full = models.ImageField(
         blank = True,
         null = True,
         upload_to = "uploads/images",
-        editable = False
+        help_text = "Will be auto-generated from image_raw; leave blank"
     )
     audio = models.FileField(
         upload_to = "uploads/audio",
