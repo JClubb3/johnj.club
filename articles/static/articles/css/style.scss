@@ -61,6 +61,12 @@ body {
       margin: 30px 0;
     }
 
+    .articleContent {
+      max-width: 650px;
+      margin: auto;
+      text-align: justify;
+    }
+
     a {
       text-decoration: none;
       color: $mainLinkColor;
