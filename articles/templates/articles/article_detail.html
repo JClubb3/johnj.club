@@ -1,5 +1,9 @@
 {% extends "articles/articles.html" %}
 
+{% block title %}
+    <title>{{ article.title }} | {{ site_title }}</title>
+{% endblock %}
+
 {% block article_header %}
     <div class="article-title-image">
         <h2{% if not article.image_full %} style="margin:auto;"{% endif %}>{{ article.title }}</h2>

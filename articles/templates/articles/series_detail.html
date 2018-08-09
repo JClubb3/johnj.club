@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block title %}
+    <title> {{ series.name }} | {{ site_title }}</title>
+{% endblock %}
+
 {% block content %}
     <div class="series-title-image-container">
         <div class="series-title">
