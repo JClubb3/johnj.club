@@ -16,7 +16,7 @@
         {% if article.has_been_modified %}
             <h5><em>Last modified: {{ article.date_modified }}</em></h5>
         {% endif %}
-        <h5>Part of the <a href="{{ article.series.get_absolute_url }}">{{ article.series }}</a> series</h5>
+        <h5>Part of the <a href="{{ article.series.get_absolute_url }}">{{ article.series.name }}</a> series</h5>
         <br>
         <em>{{ article.shortline }}</em>
     </div>
