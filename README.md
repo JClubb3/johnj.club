@@ -3,7 +3,7 @@ This is the source code for my personal website. It is a fairly standard Django 
 
 ## Getting Started
 
-Note that the code here represents the entire Django project not just the app. Also note that `settings.py` is not included and must be setup independently.
+Note that the code here represents the entire Django project, not just the app. Also note that `settings.py` is not included and must be setup independently.
 
 ### Prerequisites
 
