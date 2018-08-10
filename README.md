@@ -40,7 +40,7 @@ All of these, especially #4, are highly idiomatic to my use-case and so may be c
 
 ### AWS S3
 
-My own instance runs static and media files through AWS. This is not required, but the `storage_backends.py` assumes it to be true. If you wish to use this code and do no wish S3, simply don't set it up in `settings.py`. If you do not want to use S3 and also do not want the unnecessary code, do not install `django-storages`, `boto3`, and delete `storage_backends.py`.
+My own instance runs static and media files through AWS. This is not required, but the `storage_backends.py` assumes it to be true. If you wish to use this code and do not wish to use S3, simply don't set it up in `settings.py`. If you do not want to use S3 and also do not want the unnecessary code, do not install `django-storages`, `boto3`, and delete `storage_backends.py`.
 
 ## License
 
