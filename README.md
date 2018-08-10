@@ -3,6 +3,8 @@ This is the source code for my personal website. It is a fairly standard Django 
 
 ## Getting Started
 
+Note that the code here represents the entire Django project not just the app. Also note that `settings.py` is not included and must be setup independently.
+
 ### Prerequisites
 
 Install Python and Pip:
@@ -29,6 +31,36 @@ SITE_TITLE: "" # A string used for the <title> tags
 IMAGE_THUMBNAIL_SIZE = () # A tuple containing the size, in pixels, thumbnail images for Series, Articles, and so on should be set to.
 IMAGE_FULL_SIZE = () # Also a tuple of pixel sizes, used for the larger version of the image in Articles, Series, and Authors.
 ```
+If the included context processors are to be used, they must be added to `settings.py` as well:
+
+```python
+TEMPLATES = [
+    {
+        ...
+        'OPTIONS' : {
+            'context_processors': [
+                ...
+                'articles.context_processors.latest_articles',
+                'articles.context_processors.site_title,
+                'articles.context_processors.wyverns_and_whimsy_link',
+                'articles.context_processors.about_me_link',
+                'articles.context_processors.protfolio_link',
+            ],
+        },
+    },
+]
+```
+
+Apps should be added to in `settings.py`:
+
+```python
+INTSTALLED_APPS = [
+    ...
+    'articles.apps.ArticlesConfig',
+    'storages', # Only if S3 is going to be used
+]
+```
+
 It also expected that all of the following will be true:
 
 1. There is an Article titled "Welcome"
@@ -36,7 +68,13 @@ It also expected that all of the following will be true:
 3. There is an Article titled "Portfolio"
 4. There is a Seris titled "Wyverns and Whimsy"
 
+These last axioms may be done after the project is running using the admin backend, though the actual site will not work until these are taken care of.
+
 All of these, especially #4, are highly idiomatic to my use-case and so may be changed. #1 is found in views.index, and 2-4 are all in context_processors and templates/articles/base.html (in `navDiv`).
+
+### Running the project
+
+`cd` into your project folder and run `python3 manage.py runserver` to run the server. If the four items above have not been handled, especially #1, the front-end website will not work, but the administration backend will, which may be accessed at `/wizardry/`. Be sure to create a super user.
 
 ### AWS S3
 
