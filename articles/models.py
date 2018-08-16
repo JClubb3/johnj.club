@@ -161,8 +161,8 @@ class Author(models.Model):
     name = models.CharField(max_length=200, unique=True)
     bio = models.TextField(help_text="I mean. It's a bio.")
     image_raw = models.ImageField(
-        blank=True, 
-        upload_to="uploads/",
+        blank = True, 
+        upload_to = "uploads/",
         help_text = "A base image that will be manipulated to generate other image fields."
     )
     image_thumbnail = models.ImageField(
@@ -280,7 +280,7 @@ class Series(models.Model):
         help_text = "A short description of the series"
     )
     slug = models.SlugField(
-        help_text="The short version of the name to use in URLs",
+        help_text = "The short version of the name to use in URLs",
         null = True,
         editable = False,
         blank = True
@@ -310,13 +310,13 @@ class Series(models.Model):
         help_text = "A good-sized version of the base image. Will be auto-generated from image_raw; leave blank"
     )
     latest_article_date = models.DateTimeField(
-        null=True, 
-        blank=True,
+        null = True, 
+        blank = True,
         help_text = "The date and time the newest Article of this Series was published. Will be set automatically when an Article is created."
     )
 
     def __str__(self):
-        return self.slug
+        return self.name
 
     def get_absolute_url(self) -> str:
         """
@@ -377,7 +377,7 @@ class Series(models.Model):
         Returns the single latest Article if it exists, None otherwise.
         
         Returns:
-            Union[Article, None]: Either the laest Article or None if
+            Union[Article, None]: Either the latest Article or None if
                 no Articles could be found.
         """
 
@@ -539,7 +539,7 @@ class Article(models.Model):
 
         Attributes:
             get_latest_by (str): The field that will be used to determine
-                which Article is the neweset. Set to `publish_date`, 
+                which Article is the newest. Set to `publish_date`, 
                 descending.
             odering (list): Default ordering of Articles. Sorts by 
                 `publish_date` (descending) first, and then by `date_modified`
