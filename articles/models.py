@@ -451,7 +451,7 @@ class Article(models.Model):
         content (TextField): The actual content of the Article. The intention
             is this will allow HTML editting, since only trusting actors
             will be using this. If untrusted actors are a concern, it would
-            be safed to install a Markdown formatter and use Markdown instead
+            be safer to install a Markdown formatter and use Markdown instead
             of HTML for markup.
         shortline (CharField): A short description of the Article. Used as a
             teaser. Max length 200.
@@ -461,7 +461,7 @@ class Article(models.Model):
             should become visible. May be set to a time in the future to time-
             delay an already complete Article. Articles for which `publish_date`
             is still in the future relative to real time (irrespective of time
-            zones) will not be acessible to visitors.
+            zones) will not be accessible to visitors.
         date_modified (DateTimeField): The last time this Article had anything
             changed. Automatic and uneditable.
         date_created (DateTimeField): The date and time this Article was
@@ -623,7 +623,7 @@ class Article(models.Model):
     @classmethod
     def get_available_articles(cls) -> QuerySet:
         """
-        Returns Articles that should be acceissble to visitors.
+        Returns Articles that should be accessible to visitors.
 
         For the most part, Articles should be accessed from this QuerySet,
         which checks if the Article has a valid `publish_date` and if the
