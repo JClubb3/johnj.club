@@ -381,7 +381,7 @@ class Series(models.Model):
                 no Articles could be found.
         """
 
-        articles = self.latest_list()[0]
+        articles = self.latest_list()
         return articles[0] if articles else None
 
     class Meta:
@@ -405,12 +405,18 @@ class Tag(models.Model):
     Attributes:
         name (CharField): The name of the tag. Max length of 200 and must be 
             unique.
+        slug (SlugField): A slug based on `name`, used for URLs. Automatically
+            generated on save and uneditable.
     """
 
     name = models.CharField(
-        max_length=200, 
-        help_text="Tags used to help search for articles", 
-        unique=True
+        max_length = 200, 
+        help_text = "Tags used to help search for articles.", 
+        unique = True
+    )
+    slug = models.SlugField(
+        blank = True,
+        editable = False
     )
 
     def __str__(self):
@@ -425,7 +431,12 @@ class Tag(models.Model):
         """
 
         #pylint: disable=E1101
-        return reverse('tag-detail', args=[self.name])
+        return reverse('tag-detail', args=[self.slug])
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 class Article(models.Model):
     """
@@ -550,7 +561,7 @@ class Article(models.Model):
         ordering = ["-publish_date", "-date_modified"]
 
     def __str__(self):
-        return "{0}/{1}".format(self.series, self.slug)
+        return self.title
 
     def get_absolute_url(self) -> str:
         """

@@ -712,5 +712,119 @@ class TestModelSeries(TestCase):
         articles = len(a.latest_list())
         self.assertEquals(expected, articles)
 
-
+    @patch("articles.models.timezone.now", fake_now)
+    def test_latest_article_returns_latest_article(self):
+        author = Author.objects.create(name="Test", bio="test")
+        a = Series.objects.all()[0]
+        for x in range(2):
+            pub_date = fake_now() - timedelta(minutes=(10-x))
+            Article.objects.create(
+                title = "Test" + str(x),
+                content = "test content",
+                shortline = "test article",
+                author = author,
+                series = a,
+                publish_date = pub_date
+            )
+        expected = Article.objects.get(title="Test1")
+        article = a.latest_article()
+        self.assertEquals(expected, article)
     
+    @patch("articles.models.timezone.now", fake_now)
+    def test_latest_article_ignores_disabled_articles(self):
+        author = Author.objects.create(name="Test", bio="test")
+        a = Series.objects.all()[0]
+        for x in range(2):
+            pub_date = fake_now() - timedelta(minutes=(10-x))
+            Article.objects.create(
+                title = "Test" + str(x),
+                content = "test content",
+                shortline = "test article",
+                author = author,
+                series = a,
+                publish_date = pub_date,
+                enabled = bool(x % 2)
+            )
+        expected = Article.objects.get(title="Test1")
+        article = a.latest_article()
+        self.assertEquals(article, expected)
+
+    @patch("articles.models.timezone.now", fake_now)
+    def test_latest_article_returns_none_with_no_articles(self):
+        a = Series.objects.all()[0]
+        article = a.latest_article()
+        self.assertIsNone(article)
+
+    @patch("articles.models.timezone.now", fake_now)
+    def test_latest_article_ignores_future_articles(self):
+        author = Author.objects.create(name="Test", bio="test")
+        a = Series.objects.all()[0]
+        for x in range(2):
+            if x % 2:
+                pub_date = fake_now() - timedelta(minutes=1)
+            else:
+                pub_date = fake_later()
+            Article.objects.create(
+                title = "Test" + str(x),
+                content = "test content",
+                shortline = "test article",
+                author = author,
+                series = a,
+                publish_date = pub_date,
+            )
+        expected = Article.objects.get(title="Test1")
+        article = a.latest_article()
+        self.assertEquals(article, expected)
+
+            
+class TestModelTag(TestCase):
+    #pylint: disable=E1101
+
+    @classmethod
+    def setUpTestData(cls):
+        Tag.objects.create(name = "Test Tag")
+
+    def test_name_label(self):
+        a = Tag.objects.all()[0]
+        label = a._meta.get_field("name").verbose_name
+        expected = "name"
+        self.assertEquals(label, expected)
+
+    def test_name_max_length(self):
+        a = Tag.objects.all()[0]
+        max_length = a._meta.get_field("name").max_length
+        expected = 200
+        self.assertEquals(max_length, expected)
+
+    def test_name_unique(self):
+        a = Tag.objects.all()[0]
+        unique = a._meta.get_field("name").unique
+        self.assertTrue(unique)
+
+    def test_slug_blank(self):
+        a = Tag.objects.all()[0]
+        blank = a._meta.get_field("slug").blank
+        self.assertTrue(blank)
+
+    def test_slug_editable(self):
+        a = Tag.objects.all()[0]
+        editable = a._meta.get_field("slug").editable
+        self.assertFalse(editable)
+
+    def test_tag_str_is_name(self):
+        a = Tag.objects.all()[0]
+        expected = "Test Tag"
+        self.assertEquals(str(a), expected)
+
+    def test_tag_slug_is_slugified_name(self):
+        a = Tag.objects.all()[0]
+        expected = "test-tag"
+        slug = a.slug
+        self.assertEquals(expected, slug)
+
+    def test_absolute_url(self):
+        a = Tag.objects.all()[0]
+        expected = "/articles/tags/test-tag"
+        url = a.get_absolute_url()
+        self.assertEquals(url, expected)
+        
