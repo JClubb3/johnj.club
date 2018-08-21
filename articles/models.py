@@ -121,6 +121,20 @@ def create_image_full(instance: models.Model):
     img = _create_image(instance, settings.IMAGE_FULL_SIZE, "full")
     instance.image_full = img
 
+def now():
+    """
+    Wrapper function around timezone.now().
+
+    This is setup purely because mock patching timezone.now does not work
+    when set as the default to a field, due to the order in which models are
+    loaded relative to patch. Putting a different callable here fixes that.
+    See here, though lambdas cannot be used in field arguments:
+
+    https://stackoverflow.com/a/19169775/10225688
+    """
+
+    return timezone.now()
+
 # Create your models here.
 class Author(models.Model):
     """
@@ -389,7 +403,7 @@ class Series(models.Model):
         Meta options for Series.
 
         Attributes:
-            verbose_name_plural (str): Sets the pluarl name to Series instead
+            verbose_name_plural (str): Sets the plural name to Series instead
                 of the default Seriess
             ordering (list): Sets default ordering for Series to
                 `latest_article_date`, descending.
@@ -397,6 +411,11 @@ class Series(models.Model):
 
         verbose_name_plural = "series"
         ordering = ["-latest_article_date"]
+
+def get_latest_series():
+    #pylint: disable=E1101
+    series = Series.objects.latest("latest_article_date")
+    return series if series else Series.objects.all()[0]
 
 class Tag(models.Model):
     """
@@ -501,7 +520,7 @@ class Article(models.Model):
 
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(
-        help_text="Slugs are short versions of the title used for URLs",
+        help_text = "Slugs are short versions of the title used for URLs",
         blank = True,
         null = True,
         editable = False,
@@ -509,32 +528,33 @@ class Article(models.Model):
     content = models.TextField(help_text="Unlimited length. HTML formatted.")
     shortline = models.CharField(max_length=200, help_text="A short summary to show in the sidebar and under the article title")
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
-    publish_date = models.DateTimeField(default=timezone.now)
+    publish_date = models.DateTimeField(default=now)
     date_modified = models.DateTimeField(auto_now=True, editable=False)
     date_created = models.DateTimeField(auto_now_add=True)
-    series = models.ForeignKey('Series', on_delete=models.SET_DEFAULT, default=0)
+    series = models.ForeignKey('Series', on_delete=models.SET_DEFAULT, default=get_latest_series)
     tags = models.ManyToManyField('Tag')
     image_raw = models.ImageField(
         blank = True, 
         null = True,
-        upload_to = "uploads/images"
+        upload_to = "uploads/",
+        help_text = "A base image that will be manipulated to generate other image fields."
     )
     image_thumbnail = models.ImageField(
         blank = True, 
         null = True,
-        upload_to = "uploads/images", 
+        upload_to = "uploads/", 
         help_text = "Will be auto-generated from image_raw; leave blank"
     )
     image_thumbnail_transparent = models.ImageField(
         blank = True,
         null = True,
-        upload_to = "uploads/images",
+        upload_to = "uploads/",
         help_text = "Will be auto-generated from image_raw; leave blank"
     )
     image_full = models.ImageField(
         blank = True,
         null = True,
-        upload_to = "uploads/images",
+        upload_to = "uploads/",
         help_text = "Will be auto-generated from image_raw; leave blank"
     )
     audio = models.FileField(
@@ -542,7 +562,10 @@ class Article(models.Model):
         blank = True,
         null = True
     )
-    enabled = models.BooleanField(default=True)
+    enabled = models.BooleanField(
+        default = True,
+        help_text = "If this article should be accessible to the public or not"
+    )
 
     class Meta:
         """
@@ -570,8 +593,9 @@ class Article(models.Model):
         Returns:
             str: The absolute URL of the Article.
         """
+        #pylint: disable=E1101
 
-        return reverse('article-detail', args=[self.series, self.slug])
+        return reverse('article-detail', args=[self.series.slug, self.slug])
 
     def has_been_modified(self) -> int:
         """
