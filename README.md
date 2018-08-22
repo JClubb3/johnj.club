@@ -85,7 +85,7 @@ All of these, especially #4, are highly idiomatic to my use-case and so may be c
 1. `cd` into your project folder
 2. Run tests `manage.py`:
 ```
-python3 manage.py test
+$ python3 manage.py test
 ```
 
 ### AWS S3
