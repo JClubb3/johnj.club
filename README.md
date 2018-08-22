@@ -66,7 +66,7 @@ It also expected that all of the following will be true:
 1. There is an Article titled "Welcome"
 2. There is an Article titled "About Me"
 3. There is an Article titled "Portfolio"
-4. There is a Seris titled "Wyverns and Whimsy"
+4. There is a Series titled "Wyverns and Whimsy"
 
 These last axioms may be done after the project is running using the admin backend, though the actual site will not work until these are taken care of.
 
@@ -79,6 +79,14 @@ All of these, especially #4, are highly idiomatic to my use-case and so may be c
     1. `python3 manage.py makemigrations`
     2. `python3 manage.py migrate`
 3. Run `python3 manage.py runserver` to run the server. If the four items above have not been handled, especially #1, the front-end website will not work, but the administration backend will, which may be accessed at `/wizardry/`. Be sure to create a super user.
+
+### Tests
+
+1. `cd` into your project folder
+2. Run tests `manage.py`:
+```
+python3 manage.py test
+```
 
 ### AWS S3
 
