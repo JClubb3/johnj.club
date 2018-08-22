@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from django.http import Http404, HttpResponse, HttpRequest
 from django.core.paginator import Paginator
+from django.db.models.query import QuerySet
 
 from .models import Article, Author, Series, Tag
 
@@ -127,9 +128,25 @@ class ArticleListView(generic.ListView):
     List view for Articles, filtered to only visible Articles and paginated.
     """
 
-    #pylint: disable=E1101
-    queryset = Article.get_available_articles()
     paginate_by = 7
+
+    def get_queryset(self) -> QuerySet:
+        """
+        Filters Articles list to ones that are both enabled and published.
+
+        `get_queryset` is used instead of setting the `queryset` class
+        attribute because the attribute version is evaluated once, on
+        server start, while the method version is evaluated on each
+        request. This makes the attribute unsuitable for date-based filtering.
+
+        See: 
+        https://stackoverflow.com/questions/19707237/use-get-queryset-method-or-set-queryset-variable
+        
+        Returns:
+            QuerySet: The available Articles.
+        """
+
+        return Article.get_available_articles()
 
 
 class ArticleDetailView(generic.DetailView):

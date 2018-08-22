@@ -30,7 +30,7 @@ def get_test_image() -> SimpleUploadedFile:
     )
 
 def fake_now():
-    return datetime(2018, 8, 16, 16, 30, 0, 0, tzinfo=TZ)
+    return datetime(2018, 8, 16, 16, 30, 0, 0, tzinfo=UTC)
 
 def fake_slightly_later():
     return fake_now() + timedelta(hours=10)

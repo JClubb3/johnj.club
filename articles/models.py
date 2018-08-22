@@ -659,15 +659,15 @@ class Article(models.Model):
         # pylint: disable=E1101
         return cls.objects.filter(
             enabled = True,
-            publish_date__lte = timezone.now()
+            publish_date__lte = now()
         )
 
     def visible(self) -> bool:
         """
-        Returns whether or not this Article should be accesible to guests.
+        Returns whether or not this Article should be accessible to guests.
         
         Returns:
             bool: If visitors should be able to access this Article.
         """
 
-        return self.enabled and self.publish_date <= timezone.now()
+        return self.enabled and self.publish_date <= now()
