@@ -32,7 +32,7 @@
         {% endfor %}
     </div>
     {% if author_articles.has_next or author_articles.has_previous %}
-        {% include "articles/pagination.html" with page_obj=author_articles%}
+        {% include "articles/pagination.html" with page_obj=author_articles %}
     {% endif %}
 {% endblock %}
 

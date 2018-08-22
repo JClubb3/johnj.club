@@ -96,10 +96,13 @@ class SeriesDetailView(generic.DetailView):
         """
 
         context = super().get_context_data(**kwargs)
-        context["article_list"] = self.object.article_set.filter(
+        article_list = self.object.article_set.filter(
             enabled = True,
             publish_date__lte = timezone.now()
         )
+        paginator = Paginator(article_list, 7)
+        page = self.request.GET.get('page')
+        context["article_list"] = paginator.get_page(page)
         return context
 
 

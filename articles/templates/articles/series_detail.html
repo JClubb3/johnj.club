@@ -23,4 +23,7 @@
             {% include "articles/article_card_series_detail.html" %}
         {% endfor %}
     </div>
+    {% if article_list.has_next or article_list.has_previous %}
+        {% include "articles/pagination.html" with page_obj=article_list %}
+    {% endif %}
 {% endblock %}

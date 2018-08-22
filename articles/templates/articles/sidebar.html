@@ -12,7 +12,7 @@
         {% for article in latest_articles %}
             <div class="latest_article_iter">
             <h4><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h4>
-            <h5><em><a href="{% url 'series-detail' article.series %}">{{ article.series.name }}</a></em></h5>
+            <h5><em><a href="{% url 'series-detail' article.series.slug %}">{{ article.series.name }}</a></em></h5>
             <p class="sidebar_latest_date"><strong>{{ article.publish_date|date:"M. j, Y" }}</strong></p>
             <p>{{ article.shortline }}</p>
             </div>
