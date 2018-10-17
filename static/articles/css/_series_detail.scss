@@ -1,0 +1,19 @@
+@import 'variables';
+
+.series-title-image-container {
+    display: flex;
+    margin-top: 20px;
+
+    .series-title {
+        align-self: center;
+    }
+
+    img {
+        margin-left: auto;
+        border-radius: 10%;
+    }
+}
+
+.series-description {
+    margin-bottom: 20px;
+}

@@ -5,6 +5,13 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="{% static 'articles/js/script.js' %}"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'articles/icons/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'articles/icons/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'articles/icons/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'articles/icons/site.webmanifest' %}">
+  <link rel="mask-icon" href="{% static 'articles/icons/safari-pinned-tab.svg' %}" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
   {% block title %}<title>{{ site_title }}</title>{% endblock %}
   {% block head %}{% endblock %}
 </head>

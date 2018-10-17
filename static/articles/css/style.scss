@@ -1,19 +1,14 @@
 @import 'variables';
+@import 'navigation';
 @import 'article_list';
+@import 'article_detail';
 @import 'series_list';
+@import 'series_detail';
 @import 'article_card';
+@import 'author_detail';
+@import 'footer';
+@import 'pagination';
 
-@mixin navButtonRules {
-  background: none;
-  align-self: center;
-  color: #999;
-  border: 0;
-  font-weight: bold;
-  cursor: pointer;
-  outline: none;
-  z-index: 1000000;
-  max-height: 50px;
-}
 
 @keyframes fadeIn {
   from {opacity: 0};
@@ -34,6 +29,7 @@ body {
   background: $standardBackground;
   display: grid;
   overflow-x: hidden;
+  font-family: 'Source Sans Pro', sans-serif;
 
   div {
     display: grid;
@@ -42,89 +38,20 @@ body {
 
 .gridContainer {
   grid-template-columns: 1fr;
-  grid-template-rows: 60px 60px 1fr 100px;
+  grid-template-rows: 90px 60px 1fr 100px;
   grid-template-areas: "header" "midbar" "content" "footer";
-  
-  .nav {
-    grid-area: header;
-    display: flex;
-    flex-direction: column;
-    //outline: 1px solid red;
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-    background: $navBarColor;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    font-size: 18px;
-    position: fixed;
-    z-index: 100000000;
-
-    .navCurrentPage {
-      color: $barColor;
-      padding-top: 10px;
-    }
-
-    .siteTitle {
-      width: 80px;
-      //height: 50px;
-      position: absolute;
-      top: 10px;
-      left: calc(50% - 180px);
-      border: 1px solid red;
-      word-break: break-all;
-      color: green;
-
-      a {
-        text-decoration: none;
-        &:visited {
-          color: inherit;
-        }
-      }
-    }
-
-    .hamburger {
-      @include navButtonRules();
-      line-height: 45px;
-      padding: 5px 15px 0px 15px;
-      font-size: 1.4em;
-    }
-
-    .cross {
-      @include navButtonRules();
-      padding: 7px 15px 0px 15px;
-      font-size: 3em;
-      line-height: 65px;
-    }
-  }
-    
-  .navDiv {
-    grid-area: header;
-    justify-content: center;
-    text-align: center;
-
-    li {
-      display: grid;
-    }
-    
-    a {
-      text-decoration: none;
-      min-width: 115px;
-      color: $navLinkColor;
-      &:visited {
-        color: $navLinkColor;
-      }
-      &:hover {
-        background: $navHoverColor;
-      }
-    }
-  }
+  overflow-y: scroll;
 
 
   .content {
     grid-area: content;
-    margin: 8%;
+    padding: 0 $articlePaddingBase $articlePaddingBase * 2 $articlePaddingBase;
+    margin-top: $articlePaddingBase;
     max-width: 800px;
+    min-width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
     opacity: 0;
     animation: $fadeInAnimationSettings;
     justify-self: start;
@@ -132,6 +59,12 @@ body {
 
     .articleHeader {
       margin: 30px 0;
+    }
+
+    .articleContent {
+      max-width: 650px;
+      margin: auto;
+      text-align: justify;
     }
 
     a {
@@ -142,23 +75,6 @@ body {
       }
     }
     
-  }
-
-  .footer {
-    grid-area: footer;
-    background: $navBarColor;
-    text-align: center;
-    font-size: 12px;
-    padding-top: 5px;
-
-    a {
-      text-decoration: none;
-      color: $navLinkColor;
-      
-      &:visited {
-        color: $navLinkColor;
-      }
-    }
   }
 }
 
@@ -174,7 +90,6 @@ body {
     background: $barColor;
     width: 93%;
     margin-top: 30px;
-    height: 100%;
     padding-left: 5%;
     height: 100%;
     text-align: center;
@@ -199,7 +114,7 @@ body {
   
   .gridContainer {
     grid-template-columns: 15% 1fr 15%;
-    grid-template-rows: 0.04fr 1fr 100px;
+    grid-template-rows: 90px 1fr 100px;
     grid-template-areas: 
     "header header header" 
     "leftSidebar content rightSidebar" 
@@ -208,7 +123,7 @@ body {
   
   .sidebar {
     display: grid;
-    margin-top: calc(#{$sidebarMargin} + 10px);
+    margin-top: $sidebarMargin;
     grid-area: leftSidebar;
     height: calc(100% - #{$sidebarMargin} - 20px);
     background: $barColor;
@@ -229,6 +144,10 @@ body {
 
     .latest_article_iter {
       margin: 20px 0;
+
+      &:last-child {
+        padding-bottom: 20px;
+      }
 
       a {
         text-decoration: none;
