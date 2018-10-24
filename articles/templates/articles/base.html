@@ -1,6 +1,8 @@
+{% load analytical %}
 <html>
 <head>
   {% load static %}
+  {% analytical_head_top %}
   <link rel="stylesheet" type="text/css" href="{% static 'articles/css/style.css' %}" />
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -14,9 +16,11 @@
   <meta name="theme-color" content="#ffffff">
   {% block title %}<title>{{ site_title }}</title>{% endblock %}
   {% block head %}{% endblock %}
+  {% analytical_head_bottom %}
 </head>
 
 <body>
+  {% analytical_body_top %}
   <div class="gridContainer">
 
       <div class="nav">
@@ -66,5 +70,6 @@
     {% include "articles/footer.html" %}
 
   </div>
+  {% analytical_body_bottom %}
 </body>
 </html>
