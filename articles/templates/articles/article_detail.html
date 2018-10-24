@@ -25,7 +25,7 @@
 {% block article_content %}
     {{ article.content }}
     {% if article.audio %}
-        <div class="article-audio">
+        <div class="article-audio piwik_download">
             <audio controls src="{{ article.audio.url }}">
                 Your browser does not support the audio element.
             </audio>
